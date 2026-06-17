@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import MovieRow from './components/MovieRow';
 import FeaturedPredictions from './components/FeaturedPredictions';
 import MovieListing from './components/MovieListing';
+import PlatformInsights from './components/PlatformInsights';
 import MovieDetail from './components/MovieDetail';
 import Features from './components/Features';
 
@@ -56,6 +57,7 @@ function App() {
           <MovieRow />
           <FeaturedPredictions onPredict={handlePredict} />
           <MovieListing onPredict={handlePredict} />
+          <PlatformInsights />
           <Features />
         </>
       )}
