@@ -1,14 +1,7 @@
 import React from 'react';
 
-const MovieRow = () => {
-  const posters = [
-    { id: 1, src: 'https://m.media-amazon.com/images/M/MV5BNTkwNzJiYTctNzI3NC00NjE1LTlhYjktY2Q5MTdmMWFmNzcxXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg', alt: 'Project Hail Mary' },
-    { id: 2, src: 'https://a.ltrbxd.com/resized/film-poster/1/2/0/7/5/5/7/1207557-hoppers-0-2000-0-3000-crop.jpg?v=7711e7b5a7', alt: 'Hoppers' },
-    { id: 3, src: 'https://a.ltrbxd.com/resized/film-poster/1/1/5/0/1/1/3/1150113-ready-or-not-2-here-i-come-0-2000-0-3000-crop.jpg?v=da35b35f85', alt: 'Ready or Not 2' },
-    { id: 4, src: 'https://a.ltrbxd.com/resized/film-poster/1/3/5/7/4/0/8/1357408-undertone-2025-1-0-2000-0-3000-crop.jpg?v=fc416b1596', alt: 'Undertone' },
-    { id: 5, src: 'https://a.ltrbxd.com/resized/film-poster/7/8/7/8/4/9/787849-peaky-blinders-the-immortal-man-0-2000-0-3000-crop.jpg?v=4236d354ae', alt: 'Peaky Blinders' },
-    { id: 6, src: 'https://a.ltrbxd.com/resized/film-poster/1/2/6/6/8/9/6/1266896-the-good-boy-2025-0-2000-0-3000-crop.jpg?v=9dd771928f', alt: 'The Good Boy' },
-  ];
+const MovieRow = ({ movies = [], onPredict }) => {
+  const rowMovies = movies.slice(0, 6);
 
   return (
     <section className="bg-[#14181C] pt-6 pb-20 px-8">
@@ -29,20 +22,26 @@ const MovieRow = () => {
         </div>
 
         {/* Poster Row */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-[8px]">
-          {posters.map((poster) => (
-            <div
-              key={poster.id}
-              className="relative aspect-[2/3] rounded-[4px] overflow-hidden border border-white/10 group cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-white/40 ring-1 ring-white/0 hover:ring-white/20 shadow-xl"
-            >
-              <img
-                src={poster.src}
-                alt={poster.alt}
-                className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-          ))}
+        <div className="overflow-x-auto scroll-smooth pb-2 hide-scrollbar">
+          <div className="flex gap-[8px] min-w-max px-1">
+            {rowMovies.map((movie) => (
+              <div
+                key={movie.id}
+                onClick={() => onPredict(movie)}
+                className="relative w-[180px] sm:w-[200px] md:w-[220px] flex-shrink-0 aspect-[2/3] rounded-[4px] overflow-hidden border border-white/10 group cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-white/40 ring-1 ring-white/0 hover:ring-white/20 shadow-xl"
+              >
+                <img
+                  src={movie.poster}
+                  alt={movie.title}
+                  className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-90"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/70 to-transparent text-white">
+                  <p className="text-sm font-black tracking-tight">{movie.title}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

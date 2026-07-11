@@ -1,12 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Trophy, Clock, ChevronRight, ChevronLeft, Target, TrendingUp, Users } from 'lucide-react';
-import hailMary from '../assets/posters/hail_mary.png';
-import hoppers from '../assets/posters/hoppers.png';
-import readyOrNot2 from '../assets/posters/ready_or_not_2.png';
-import undertone from '../assets/posters/undertone.png';
-import peakyBlinders from '../assets/posters/peaky_blinders.png';
-import heel from '../assets/posters/heel.png';
-
 const FeaturedPredictions = ({ onPredict }) => {
   const [activeSlide, setActiveSlide] = useState(0);
 

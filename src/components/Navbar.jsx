@@ -3,7 +3,7 @@ import { Search, Menu, X, User, LogOut, Check } from 'lucide-react';
 
 import SignupModal from './SignupModal';
 
-const Navbar = ({ onHomeClick, onPredictionsClick, onLeaderboardClick, onRewardsClick }) => {
+const Navbar = ({ onHomeClick, onSearchClick, onRankingClick, onAnalyticsClick, onPredictionsClick, onLeaderboardClick, onRewardsClick }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,7 +21,9 @@ const Navbar = ({ onHomeClick, onPredictionsClick, onLeaderboardClick, onRewards
 
   const navLinks = [
     { name: 'Home', href: '#', action: onHomeClick },
-    { name: 'Movies', href: '#' },
+    { name: 'Search', href: '#', action: onSearchClick },
+    { name: 'Ranking', href: '#', action: onRankingClick },
+    { name: 'Analytics', href: '#', action: onAnalyticsClick },
     { name: 'Predictions', href: '#', action: onPredictionsClick },
     { name: 'Leaderboard', href: '#', action: onLeaderboardClick },
     { name: 'Rewards', href: '#', action: onRewardsClick },
@@ -33,7 +35,7 @@ const Navbar = ({ onHomeClick, onPredictionsClick, onLeaderboardClick, onRewards
         scrolled || isLoginOpen ? 'bg-[#14181C]/95 backdrop-blur-md py-3 shadow-2xl border-b border-white/5' : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-[1280px] mx-auto flex items-center justify-between px-6 lg:px-10">
+      <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-8 px-6 lg:px-10">
         
         {/* 1. LEFT SECTION (BRAND) - Hidden when login is open on some mobile designs, but keeping for balance */}
         <div className={`flex items-center transition-opacity duration-300 ${isLoginOpen ? 'opacity-0 md:opacity-100 pointer-events-none' : 'opacity-100'}`}>
@@ -126,7 +128,7 @@ const Navbar = ({ onHomeClick, onPredictionsClick, onLeaderboardClick, onRewards
         ) : (
           <>
             {/* 2. CENTER SECTION (Nav Links) */}
-            <div className="hidden lg:flex items-center gap-8">
+            <div className="hidden lg:flex items-center gap-4 xl:gap-8 shrink-0">
               {navLinks.map((link) => (
                 <a 
                   key={link.name} 
@@ -154,7 +156,12 @@ const Navbar = ({ onHomeClick, onPredictionsClick, onLeaderboardClick, onRewards
                 <input 
                   type="text" 
                   placeholder="Search movies..."
-                  className="bg-white/5 border border-white/10 rounded-full py-1.5 pl-9 pr-4 text-[14px] w-full focus:outline-none focus:bg-white/10 focus:border-white/20 transition-all text-white placeholder-white/30"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveTab('Search');
+                    onSearchClick();
+                  }}
+                  className="bg-white/5 border border-white/10 rounded-full py-1.5 pl-9 pr-4 text-[14px] w-full focus:outline-none focus:bg-white/10 focus:border-white/20 transition-all text-white placeholder-white/30 cursor-pointer"
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 group-focus-within/search:text-brand-green transition-colors" />
               </div>
@@ -218,7 +225,12 @@ const Navbar = ({ onHomeClick, onPredictionsClick, onLeaderboardClick, onRewards
               <div className="relative">
                 <input 
                   type="text" 
-                  className="bg-white/5 border border-white/10 rounded-lg py-3 pl-11 pr-4 text-[15px] w-full focus:outline-none focus:border-brand-green/30 text-white placeholder-white/30"
+                  onClick={() => {
+                    setActiveTab('Search');
+                    onSearchClick();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="bg-white/5 border border-white/10 rounded-lg py-3 pl-11 pr-4 text-[15px] w-full focus:outline-none focus:border-brand-green/30 text-white placeholder-white/30 cursor-pointer"
                   placeholder="Search movies..."
                 />
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />

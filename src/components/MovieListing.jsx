@@ -1,43 +1,12 @@
 import React, { useState } from 'react';
 import { Calendar, Tag, ChevronRight, Play, Lock, CheckCircle2 } from 'lucide-react';
 
-const MovieListing = ({ onPredict }) => {
+const MovieListing = ({ movies = [], onPredict }) => {
   const [activeFilter, setActiveFilter] = useState('Upcoming');
 
   const filters = ['Upcoming', 'Now Showing', 'Big Releases'];
 
-  const movies = [
-    {
-      id: 1,
-      title: "Project Hail Mary",
-      releaseDate: "March 20, 2026",
-      status: "Open",
-      genres: ["Sci-Fi", "Drama"],
-      poster: "https://m.media-amazon.com/images/M/MV5BNTkwNzJiYTctNzI3NC00NjE1LTlhYjktY2Q5MTdmMWFmNzcxXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-      color: "border-brand-green",
-      glow: "shadow-brand-green/20"
-    },
-    {
-      id: 2,
-      title: "Peaky Blinders: The Immortal Man",
-      releaseDate: "March 20, 2026",
-      status: "Open",
-      genres: ["Crime", "Drama"],
-      poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSM1RfnNxjkJjv6su_9EVi-AqVTvMyaiWergB9Vh_utvs1n6ZYTWygADBA1Xzwx0kxDfH5S&s=10",
-      color: "border-brand-green",
-      glow: "shadow-brand-green/20"
-    },
-    {
-      id: 3,
-      title: "Ready or Not 2: Here I Come",
-      releaseDate: "November 15, 2025",
-      status: "Locked",
-      genres: ["Horror", "Comedy"],
-      poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfl2H2Hd7Lf3_4QEElNKG-XKZLpNDHziIfKaVKBn8X_HIPeewbZNbCGybVuZj8yjOusBm5&s=10",
-      color: "border-brand-orange",
-      glow: "shadow-brand-orange/20"
-    }
-  ];
+  const filteredMovies = movies.filter((movie) => movie.category === activeFilter);
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -102,10 +71,11 @@ const MovieListing = ({ onPredict }) => {
 
         {/* Movie Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {movies.map((movie) => (
+          {filteredMovies.map((movie) => (
             <div 
               key={movie.id} 
-              className="group relative bg-[#1C2227] rounded-3xl overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-500 hover:-translate-y-2 shadow-2xl"
+              onClick={() => onPredict(movie)}
+              className="group relative bg-[#1C2227] rounded-3xl overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-500 hover:-translate-y-2 shadow-2xl cursor-pointer"
             >
               {/* Image Container */}
               <div className="relative aspect-[2/3] overflow-hidden">
@@ -126,7 +96,10 @@ const MovieListing = ({ onPredict }) => {
                 {/* Quick Predict Button (Hover Only) */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-10 group-hover:translate-y-0 z-20 bg-black/40 backdrop-blur-sm">
                    <button 
-                     onClick={() => onPredict(movie)}
+                     onClick={(e) => {
+                       e.stopPropagation();
+                       onPredict(movie);
+                     }}
                      className="flex items-center gap-2 bg-white text-black px-8 py-4 rounded-full text-[14px] font-black uppercase tracking-tighter hover:scale-105 active:scale-95 transition-all shadow-2xl"
                    >
                       Predict Now <Play className="w-4 h-4 fill-current" />
